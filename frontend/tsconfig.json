@@ -1,0 +1,33 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@widgets/*": ["./widgets/*"],
+      "@features/*": ["./features/*"],
+      "@entities/*": ["./entities/*"],
+      "@shared/*": ["./shared/*"],
+      "@pages/*": ["./pages/*"],
+      
+      "@/*": ["./app/*"],
+      "~/*": ["./*"]
+    }
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.vue",
+    "widgets/**/*.ts",
+    "widgets/**/*.vue",
+    "shared/**/*.ts",
+    "features/**/*.ts",
+    "entities/**/*.ts",
+    "pages/**/*.ts",
+    "nuxt.config.ts"
+, "composables/useTourFilters.ts", "composables/useTours.ts", "composables/usePagination.ts"  ],
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ]
+}

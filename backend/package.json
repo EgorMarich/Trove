@@ -1,0 +1,49 @@
+{
+  "name": "backend",
+  "version": "2.6.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/server.ts --format esm --dts --clean",
+    "start": "node dist/server.js",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "type-check": "tsc --noEmit",
+    "test": "tsx src/modules/providers/booking-com/__tests__/harness.ts",
+    "test:provider": "pnpm test",
+    "test:journey": "tsx src/integration/full-booking-journey.ts",
+    "test:all": "pnpm test && pnpm test:journey",
+    "test:auth": "tsx src/modules/auth/__tests__/repository.ts",
+    "db:migrate": "bash scripts-migrate.sh",
+    "test:security": "tsx src/modules/security/__tests__/security.ts",
+    "test:booking-sandbox": "tsx src/integration/booking-com-sandbox.ts",
+    "test:real-preflight": "tsx src/integration/real-beta-preflight.ts",
+    "test:real-e2e": "tsx src/integration/real-provider-e2e.ts",
+    "admin:create": "tsx scripts/create-admin.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.2",
+  "dependencies": {
+    "hono": "^4.12.27",
+    "ioredis": "^5.7.0",
+    "pg": "^8.16.3",
+    "@hono/node-server": "^1.19.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.62.0",
+    "@typescript-eslint/parser": "^8.62.0",
+    "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.1",
+    "tsup": "^8.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "@types/pg": "^8.15.5"
+  }
+}

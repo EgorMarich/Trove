@@ -1,0 +1,41 @@
+/* Trove design system — UI only. */
+:root {
+  --font-body: 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: 'Manrope', 'Inter', ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ink: #102019; --ink-2: #3c4c44; --muted: #718078; --muted-2: #9aa69f;
+  --canvas: #f5f7f5; --paper: #fff; --surface: #edf3ef; --surface-2: #e4ece7;
+  --line: #e2e9e4; --line-strong: #ccd7d0;
+  --brand: #f2644a; --brand-dark: #db4e36; --brand-soft: #fff0ec;
+  --forest: #123b2b; --forest-2: #1e6046; --green: #087a52; --green-soft: #e8f6f0;
+  --yellow: #e1a018; --success: #087a52; --warning: #a76b00; --danger: #c73f35; --info: #256ea9;
+  --radius-xs: 7px; --radius-sm: 10px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 22px; --radius-2xl: 28px; --radius-pill: 999px;
+  --shadow-xs: 0 1px 2px rgba(16,32,25,.03); --shadow-sm: 0 2px 8px rgba(16,32,25,.035),0 12px 32px rgba(16,32,25,.045);
+  --shadow-md: 0 10px 32px rgba(16,32,25,.09); --shadow-lg: 0 22px 64px rgba(16,32,25,.14);
+  --ease: cubic-bezier(.2,.8,.2,1); --duration-fast:150ms; --duration:220ms; --duration-slow:320ms; --header-height:70px;
+}
+[data-theme="dark"] { --ink:#f4f7f5; --ink-2:#d0dad4; --muted:#9eaba4; --muted-2:#77857e; --canvas:#0c1410; --paper:#14201a; --surface:#1a2a21; --surface-2:#22342a; --line:#293b31; --line-strong:#3a4d41; }
+*{box-sizing:border-box;font-family:var(--font-body)}
+html{margin:0;min-width:320px;scroll-behavior:smooth;background:var(--canvas)}
+body{margin:0;min-width:320px;color:var(--ink);background:var(--canvas);font-family:var(--font-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body,button,input,select,textarea{font-synthesis:none} button,input,select,textarea{font:inherit} button{-webkit-tap-highlight-color:transparent} a,a:visited{color:inherit} img{max-width:100%}
+::selection{background:#ffd9d0;color:var(--ink)}
+.trove-container{width:min(1240px,calc(100% - 48px));margin-inline:auto}
+.trove-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 18px;border:1px solid transparent;border-radius:var(--radius-md);background:var(--ink);color:#fff!important;text-decoration:none!important;font-size:14px;font-weight:800;cursor:pointer;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease)}
+.trove-button:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)} .trove-button:focus-visible{outline:3px solid rgba(242,100,74,.24);outline-offset:2px}.trove-button--brand{background:var(--brand)}.trove-button--brand:hover{background:var(--brand-dark)}.trove-button--light{background:var(--paper);color:var(--ink)!important;border-color:var(--line-strong)}.trove-button:disabled{opacity:.58;cursor:wait;transform:none;box-shadow:none}
+.section-kicker{display:inline-flex;align-items:center;gap:7px;color:var(--green);font-size:11px;line-height:1.2;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.section-title{margin:8px 0 10px;color:var(--ink);font-family:var(--font-display);font-size:clamp(34px,4vw,50px);line-height:1.02;font-weight:800;letter-spacing:-.05em}.section-lead{margin:0;max-width:700px;color:var(--ink-2);font-size:16px;line-height:1.65}.page-section{padding:72px 0;border-top:1px solid var(--line)}.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:26px}.text-link{display:inline-flex;align-items:center;gap:7px;color:var(--ink)!important;text-decoration:none!important;font-size:14px;font-weight:800;white-space:nowrap}.text-link:hover{color:var(--brand-dark)!important}
+input,select,textarea{color:var(--ink)} input::placeholder,textarea::placeholder{color:var(--muted-2)} input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(242,100,74,.15);outline-offset:0}
+@media(max-width:700px){.trove-container{width:calc(100% - 32px)}.page-section{padding:52px 0}.section-head{display:block;margin-bottom:20px}.section-title{font-size:34px}.section-lead{font-size:15px}.text-link{margin-top:14px}}
+
+:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 32%,transparent);outline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--brand) 32%,transparent);outline-offset:2px}
+img{background:var(--surface-2)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* Final product polish: shared interaction primitives. */
+html{scroll-padding-top:calc(var(--header-height) + 16px)}
+button,a,input,select,textarea{transition:color var(--duration-fast) var(--ease),background-color var(--duration-fast) var(--ease),border-color var(--duration-fast) var(--ease),box-shadow var(--duration-fast) var(--ease),transform var(--duration-fast) var(--ease)}
+button,a{touch-action:manipulation}
+.trove-button--secondary{background:var(--surface);color:var(--ink)!important;border-color:var(--line)}
+.trove-button--ghost{background:transparent;color:var(--ink)!important;border-color:transparent}
+.trove-button--ghost:hover{background:var(--surface);box-shadow:none}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
