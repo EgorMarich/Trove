@@ -5,7 +5,18 @@ export default defineNuxtConfig({
   // Load the design system globally. Keeping this in Nuxt config avoids relying on a layout SFC style block for global CSS.
   css: ['./shared/styles/global.scss'],
   compatibilityDate: '2025-07-15',
-   modules: ['@nuxtjs/i18n'],
+  modules: ['@nuxtjs/i18n'],
+  i18n: {
+    locales: [
+      { code: 'ru', file: 'ru.json' },
+      { code: 'en', file: 'en.json' },
+      { code: 'es', file: 'es.json' },
+      { code: 'kk', file: 'kk.json' },
+    ],
+    defaultLocale: 'ru',
+    lazy: true,
+    langDir: 'locales/',   // относительно i18n/ или корня
+  },
   devtools: { enabled: true },
   runtimeConfig: {
     public: {

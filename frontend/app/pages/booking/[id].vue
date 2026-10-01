@@ -16,6 +16,11 @@
 import { ShieldCheck } from '@lucide/vue'
 import { formatPrice } from '@entities/tours/model/tour'
 import type { Tour } from '~/types/tours'
+import { useAnalytics } from '../../../composables/useAnalytics';
+import { useAuth } from '../.././../composables/useAuth';
+import { useTours } from '../../../composables/useTours';
+import { useBookings } from '../../../composables/useBookings'
+import { useLoyalty } from '../../../composables/useLoyalty'
 const route=useRoute(); const analytics=useAnalytics(); const auth=useAuth(); const {getDetail}=useTours(); const bookings=useBookings(); const loyalty=useLoyalty(); const tour=ref<Tour|null>(null); const loading=ref(false); const error=ref(''); const promoCode=ref(''); const promoLoading=ref(false); const promoValid=ref(false); const promoMessage=ref(''); const promoDiscount=ref(0); const loyaltyDiscount=ref(0); const contact=reactive({email:'',phone:'',address:{country:'RU',city:'',address:'',zip:''}}); const passengers=ref([{firstName:'',lastName:'',birthDate:''}]); const termsAccepted=ref(false)
 const discount=computed(()=>promoValid.value?promoDiscount.value:(tour.value?Math.round(tour.value.price*loyaltyDiscount.value/100):0)); const displayPrice=computed(()=>tour.value?Math.max(1,tour.value.price-discount.value):0);
 const checkPromo=async()=>{if(!tour.value||!promoCode.value.trim())return;promoLoading.value=true;promoMessage.value='';promoValid.value=false;try{const q=await loyalty.validate(promoCode.value,tour.value.price,tour.value.destination);promoValid.value=q.valid;promoDiscount.value=q.discount;promoMessage.value=q.valid?`Промокод применён: −${formatPrice(q.discount,tour.value.currency)}`:(q.reason||'Промокод недействителен')}catch(e){promoMessage.value=e instanceof Error?e.message:'Промокод недействителен'}finally{promoLoading.value=false}};

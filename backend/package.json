@@ -17,7 +17,7 @@
     "test:journey": "tsx src/integration/full-booking-journey.ts",
     "test:all": "pnpm test && pnpm test:journey",
     "test:auth": "tsx src/modules/auth/__tests__/repository.ts",
-    "db:migrate": "bash scripts-migrate.sh",
+    "db:migrate": "tsx scripts/migrate.ts",
     "test:security": "tsx src/modules/security/__tests__/security.ts",
     "test:booking-sandbox": "tsx src/integration/booking-com-sandbox.ts",
     "test:real-preflight": "tsx src/integration/real-beta-preflight.ts",
@@ -29,13 +29,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.33.2",
   "dependencies": {
+    "@hono/node-server": "^1.19.7",
+    "dotenv": "^18.0.4",
     "hono": "^4.12.27",
     "ioredis": "^5.7.0",
-    "pg": "^8.16.3",
-    "@hono/node-server": "^1.19.7"
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "@types/pg": "^8.15.5",
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",
     "eslint": "^10.6.0",
@@ -43,7 +45,6 @@
     "prettier": "^3.9.1",
     "tsup": "^8.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0",
-    "@types/pg": "^8.15.5"
+    "typescript": "^5.6.0"
   }
 }

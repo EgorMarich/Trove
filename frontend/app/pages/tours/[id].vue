@@ -65,6 +65,9 @@ import { formatPrice } from '@entities/tours/model/tour'
 import { useTours } from '@composables/useTours'
 import type { PriceCheckResponse, Tour } from '~/types/tours'
 import { badgeLabel } from '@entities/tours/model/tour'
+import { useAnalytics } from '../../../composables/useAnalytics'
+import { useAuth } from '../../../composables/useAuth'
+import { usePersonalization } from '../../../composables/usePersonalization'
 
 const route = useRoute()
 const analytics = useAnalytics()

@@ -109,10 +109,10 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { CalendarDays, ChevronRight, Heart, MapPin, Plane, Search, ShieldCheck, SlidersHorizontal, Sparkles, Star, Users, Waves, X, CheckCircle2, PawPrint, BadgeCheck } from '@lucide/vue'
 import { useRoute, useRouter } from 'vue-router'
-import TourCard from '@entities/tours/ui/cards/TourCard.vue'
+import TourCard from '../../../entities/tours/ui/cards/TourCard.vue'
 import DateRangePicker, { type DateRangeValue } from '@shared/ui/datePicker/DateRangePicker.vue'
 import Checkbox from '@shared/ui/checkbox/Checkbox.vue'
-import { useTours } from '@composables/useTours'
+import { useTours } from '../../../composables/useTours'
 import type { Tour } from '~/types/tours'
 
 const route = useRoute(); const router = useRouter()

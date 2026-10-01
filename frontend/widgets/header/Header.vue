@@ -2,7 +2,7 @@
   <header class="site-header">
     <div class="header-inner">
       <NuxtLink to="/" class="logo" aria-label="Trove">
-        <img src="/logo/trove-logo.svg" alt="Trove" />
+        <img src="/logo/trove-logo.svg" alt="Trove" class="img"/>
       </NuxtLink>
 
       <nav class="desktop-nav" aria-label="Основная навигация">
@@ -11,7 +11,32 @@
         <NuxtLink to="/guides" :class="{ active: route.path.startsWith('/guides') }">Гид</NuxtLink>
       </nav>
 
-      <div class="header-actions"><select class="header-locale" :value="locale" aria-label="Язык" @change="setLocale(($event.target as HTMLSelectElement).value as any)"><option value="ru">RU</option><option value="en">EN</option><option value="es">ES</option><option value="kk">KZ</option></select>
+      <div class="header-actions"><div class="locale-wrap">
+  <button
+    class="locale-button"
+    type="button"
+    :aria-expanded="localeOpen"
+    aria-haspopup="listbox"
+    @click="localeOpen = !localeOpen"
+  >
+    {{ locale.toUpperCase() }}
+    <ChevronDown :size="14" :class="{ rotated: localeOpen }" />
+  </button>
+
+  <ul v-if="localeOpen" class="locale-menu" role="listbox">
+    <li
+      v-for="opt in localeOptions"
+      :key="opt.value"
+      role="option"
+      :aria-selected="opt.value === locale"
+      class="locale-item"
+      :class="{ 'is-active': opt.value === locale }"
+      @click="chooseLocale(opt.value)"
+    >
+      {{ opt.label }}
+    </li>
+  </ul>
+</div>
         <NuxtLink to="/favorites" class="favorite-link"><Heart :size="17" /><span>Избранное</span></NuxtLink>
         <div v-if="user" class="profile-wrap">
           <button class="profile-button" type="button" :aria-expanded="profileOpen" @click="profileOpen=!profileOpen">
@@ -50,12 +75,36 @@
 </template>
 
 <script setup lang="ts">
-const { t, locale, setLocale } = useI18n()
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth } from '../../composables/useAuth'
 import { ChevronDown, Heart, LogOut, Menu, Settings, UserRound, X } from '@lucide/vue'
+
+const localeOpen = ref(false)
+
+const localeOptions = [
+  { value: 'ru', label: 'RU' },
+  { value: 'en', label: 'EN' },
+  { value: 'es', label: 'ES' },
+  { value: 'kk', label: 'KZ' },
+] as const
+
+function chooseLocale(value: string) {
+  setLocale(value as any)
+  localeOpen.value = false
+}
+
+function onDocClick(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (!target.closest('.locale-wrap')) localeOpen.value = false
+}
+
+onMounted(() => document.addEventListener('click', onDocClick))
+onBeforeUnmount(() => document.removeEventListener('click', onDocClick))
+
+const { t, locale, setLocale } = useI18n()
+watchEffect(() => { locale.value })
 
 const route = useRoute()
 const auth = useAuth()
@@ -67,6 +116,87 @@ const user = auth.user
 </script>
 
 <style scoped lang="scss">
+.logo{
+  display:inline-flex;
+  align-items:center;
+  width:68px !important;  
+  height:28px !important;
+  background: inherit;
+}
+.logo img{
+  display:block;
+  width:118px;   
+  height:auto;
+  background: inherit;
+}
+
+.locale-wrap {
+  position: relative;
+}
+
+.locale-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .03em;
+  cursor: pointer;
+  transition: background .18s var(--ease), border-color .18s var(--ease);
+}
+.locale-button:hover,
+.locale-button[aria-expanded="true"] {
+  background: var(--surface);
+  border-color: var(--line-strong);
+}
+.locale-button svg {
+  transition: transform .18s var(--ease);
+  opacity: .7;
+}
+.locale-button svg.rotated {
+  transform: rotate(180deg);
+}
+
+
+.locale-menu {
+  position: absolute;
+  top: 98%;
+  min-width: 57.5px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  box-shadow: var(--shadow-lg);
+  z-index: 20;
+}
+
+.locale-item {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 9px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s var(--ease), color .15s var(--ease);
+}
+.locale-item:hover {
+  background: var(--surface);
+}
+.locale-item.is-active {
+  color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
 .site-header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--paper) 90%,transparent);border-bottom:1px solid color-mix(in srgb,var(--line) 90%,transparent);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%)}
 .header-inner{width:min(1240px,calc(100% - 48px));min-height:70px;margin:auto;display:flex;align-items:center;gap:44px}.logo{display:inline-flex;align-items:center;width:118px;height:38px;color:var(--ink)!important;text-decoration:none!important}.logo img{display:block;width:118px;height:auto}
 .desktop-nav{display:flex;align-items:center;gap:28px;flex:1}.desktop-nav a{position:relative;padding:25px 0 23px;color:var(--ink-2)!important;text-decoration:none!important;font-size:13px;font-weight:700}.desktop-nav a:hover,.desktop-nav a.active{color:var(--ink)!important}.desktop-nav a.active::after{content:'';position:absolute;left:0;right:0;bottom:13px;height:3px;border-radius:3px;background:var(--brand)}

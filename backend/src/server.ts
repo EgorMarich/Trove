@@ -7,7 +7,7 @@ import { logger } from './infrastructure/observability/logger'
 import { startMarketingAutomationWorker } from './infrastructure/operations/marketing-automation-worker'
 
 const port = Number(process.env.PORT || 3001)
-const hostname = process.env.HOST || '0.0.0.0'
+const hostname = process.env.HOST || '127.0.0.1'
 
 const server = serve({ fetch: app.fetch, port, hostname })
 const stopReconciliationWorker = startReconciliationWorker()

@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { useApi } from './useApi'
 
 export interface LoyaltyProfile {
   level: 'explorer' | 'traveler' | 'voyager'

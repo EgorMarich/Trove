@@ -3,7 +3,6 @@
     <div class="hero-inner trove-container">
       <div class="hero-top">
         <div class="hero-copy">
-          <div class="eyebrow"><span></span> Сравниваем предложения, чтобы вы выбрали быстрее</div>
           <h1>Хорошая поездка<br /><em>начинается с поиска.</em></h1>
           <p>Собираем туры из разных источников, показываем важные условия рядом и помогаем понять, за что вы платите.</p>
           <div class="hero-proof">

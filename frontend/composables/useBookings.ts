@@ -1,3 +1,5 @@
+import { useApi } from "./useApi";
+
 export interface Passenger { firstName: string; lastName: string; birthDate?: string; passportNumber?: string }
 export interface BookingInput { offerId:string; providerId:string; passengers:Passenger[]; contact:{email:string;phone?:string;address?:{country:string;city:string;address:string;zip?:string}}; promoCode?:string }
 export interface BookingPreviewInput extends BookingInput { idempotencyKey:string }
@@ -15,3 +17,4 @@ export const useBookings = () => {
   const reconcilePayment=async(paymentIntentId:string)=>api<{item:any}>(`/api/payments/intents/${paymentIntentId}/reconcile`,{method:'POST'}).then(r=>r.item)
   return {items,loading,load,get,create,preview,confirm,cancel,lifecycle,createPaymentIntent,confirmPayment,reconcilePayment}
 }
+м

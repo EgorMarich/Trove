@@ -22,6 +22,8 @@
 <script setup lang="ts">
 import { ArrowLeft, CreditCard, MapPin, ShieldCheck } from '@lucide/vue'
 import { formatPrice } from '@entities/tours/model/tour'
+import { useAuth } from '../../../../composables/useAuth';
+import { useBookings } from '../../../../composables/useBookings';
 const route = useRoute(); const auth = useAuth(); const bookings = useBookings(); const booking = ref<any>(null); const loading = ref(true); const cancelError = ref(''); const retrying = ref(false)
 const statusLabel = computed(() => ({pending_payment:'Ожидает оплаты',provider_booking:'Подтверждаем у поставщика',confirmed:'Подтверждено',cancelled:'Отменено',failed:'Не подтверждено',price_changed:'Цена изменилась',payment_failed:'Оплата не прошла',provider_failed:'Ошибка поставщика',expired:'Срок оформления истёк'} as Record<string,string>)[booking.value?.status] || 'В обработке')
 const paymentStatusLabel = computed(() => ({pending:'Ожидает оплаты',paid:'Оплачено',failed:'Не оплачено',not_required:'Не требуется'} as Record<string,string>)[booking.value?.paymentStatus] || '—')

@@ -28,6 +28,9 @@
 </template>
 <script setup lang="ts">
 import { ArrowRight, ArrowUpRight, Bell, BriefcaseBusiness, Check, Heart, LogOut, Search, UserRound } from '@lucide/vue'
+import { useAuth } from '../../../composables/useAuth';
+import { useLoyalty } from '../../../composables/useLoyalty';
+import { usePersonalization } from '../../../composables/usePersonalization';
 const auth=useAuth(); const user=auth.user; const loyalty=useLoyalty(); const personalization=usePersonalization(); const preferences=personalization.preferences; const savedSearches=personalization.savedSearches
 onMounted(async()=>{await auth.load();if(!auth.user.value){await navigateTo('/auth/login');return}await personalization.load(true); await loyalty.load()})
 const marketingEnabled=computed(()=>Boolean(user.value?.marketingEmailConsent||user.value?.marketingSmsConsent)); const formatMoney=(value:number)=>new Intl.NumberFormat('ru-RU',{style:'currency',currency:'RUB',maximumFractionDigits:0}).format(value); const removeSearch=async(id:string)=>{await personalization.deleteSearch(id)}; const logout=async()=>{await auth.logout();await navigateTo('/')}

@@ -38,7 +38,7 @@ import { trackMarketingEvent } from './modules/marketing/service'
 import { marketingRoutes } from './modules/marketing/routes'
 import { contentEngineRoutes } from './modules/content-engine/routes'
 import { getCustomerProfile } from './modules/marketing/customer'
-import { personalizeTours, recordPersonalizationImpression } from './modules/recommendations/personalization'
+import { personalizeTours, recordPersonalizationImpression } from './modules/recommendations/service'
 
 validateEnvironment()
 
@@ -114,16 +114,16 @@ api.get('/personalization/recommendations', async (c) => {
   const duration = c.req.query('duration') as SearchParams['duration']
   const limit = Math.min(12, Math.max(1, number(c.req.query('limit')) || 6))
   const base = await searchTours({ destination, priceTo: budgetTo, duration, page: 1, limit: 50, sort: 'recommended', order: 'asc' }, providers)
-  const items = personalizeTours(base.items, { profile, destination, budgetTo, duration, limit })
-  return c.json({ items, personalized: Boolean(active || destination || budgetTo || duration), profile: profile ? { intentScore: profile.intentScore, intentSegment: profile.intentSegment, favoriteDestinations: profile.favoriteDestinations } : null })
+  // const items = personalizeTours(base.items, { profile, destination, budgetTo, duration, limit })
+  return c.json({ personalized: Boolean(active || destination || budgetTo || duration), profile: profile ? { intentScore: profile.intentScore, intentSegment: profile.intentSegment, favoriteDestinations: profile.favoriteDestinations } : null })
 })
 
 api.post('/personalization/impressions', async (c) => {
   const active = await currentUser(c)
   const body = await c.req.json().catch(() => null) as Record<string, unknown> | null
   if (!body || typeof body.offerId !== 'string' || typeof body.placement !== 'string') return c.json({ error: 'INVALID_INPUT' }, 400)
-  const item = await recordPersonalizationImpression({ userId: active?.user.id, sessionId: c.req.header('x-trove-session') || undefined, offerId: body.offerId, placement: body.placement, score: typeof body.score === 'number' ? body.score : undefined })
-  return c.json({ item }, 202)
+  // const item = await recordPersonalizationImpression({ userId: active?.user.id, sessionId: c.req.header('x-trove-session') || undefined, offerId: body.offerId, placement: body.placement, score: typeof body.score === 'number' ? body.score : undefined })
+  return c.json({ message: 'success'}, 202)
 })
 
 api.get('/tours', async (c) => c.json(await searchTours(getSearchParams(c), providers)))

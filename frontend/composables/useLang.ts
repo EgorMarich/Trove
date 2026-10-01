@@ -36,8 +36,17 @@ export const useI18n = () => {
     const stored = localStorage.getItem('trove_locale') as Locale | null
     if (stored && messages[stored]) locale.value = stored
     ready.value = true
+  }const t = (key: string) => messages[locale.value]?.[key] ?? messages.ru[key] ?? key
+
+  const setLocale = (next: Locale) => {
+    locale.value = next
+    if (import.meta.client) localStorage.setItem('trove_locale', next)
   }
-  const t = (key:string) => messages[locale.value][key] || messages.ru[key] || key
-  const setLocale = (next:Locale) => { locale.value=next; if(import.meta.client)localStorage.setItem('trove_locale',next) }
-  return { locale: computed(()=>locale.value), t, setLocale, locales: Object.keys(messages) as Locale[] }
+
+  return {
+    locale: computed(() => locale.value),
+    t,
+    setLocale,
+    locales: Object.keys(messages) as Locale[],
+  }
 }
